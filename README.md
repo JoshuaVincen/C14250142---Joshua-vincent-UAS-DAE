@@ -1,225 +1,249 @@
 # C14250142---Joshua-vincent-UAS-DAE
+# README — Analisis Dataset Toyota Corolla (Tanpa Python)
 
+Dokumen ini berisi ringkasan **step-by-step** proses analisis menggunakan:
 
-# README — Analisis Dataset ToyotaCorolla (Step-by-step + Visualisasi)
+* **Dataset CSV Toyota Corolla**
+* **Workflow KNIME (`KNIME_TOYOTA_2.0.knwf`)**
 
-Dokumen ini adalah README ringkas dan reproducible yang menuntun Anda langkah-per-langkah — dari persiapan lingkungan hingga pembuatan visualisasi — untuk dataset `ToyotaCorolla.csv`. Semua perintah disajikan dalam urutan yang jelas sehingga Anda bisa menjalankannya satu-per-satu.
+Ringkasan ini mencakup tiga tahap utama:
 
----
+1. **Tahap Data Preparation**
+2. **Tahap Data Processing & Klasifikasi**
+3. **Tahap Visualisasi**
 
-## Output yang sudah tersedia
-
-Letakkan perhatian ke folder output yang saya gunakan: `/mnt/data/knime_report_outputs/`.
-
-File penting:
-
-* `ToyotaCorolla_processed.csv` — dataset yang dibersihkan.
-* `ToyotaCorolla_report.pdf` — laporan ringkas (jika tersedia)
-* `hist_price.png`, `scatter_price_age.png`, `scatter_price_km.png`, `corr_matrix.png` — visualisasi utama.
+Tidak ada kode Python di dalam dokumen ini.
 
 ---
 
-## 1. Persiapan lingkungan
+# 1. Tahap Data Preparation
 
-1. Pastikan Python 3.8+ terpasang.
-2. Buat virtual environment (opsional) dan install dependensi:
+Tahap ini dilakukan baik di KNIME maupun berdasarkan struktur dataset asli.
 
-```bash
-python -m venv venv
-source venv/bin/activate  # linux / macOS
-# atau: venv\Scripts\activate  # Windows
-pip install pandas numpy matplotlib scikit-learn reportlab
-```
+## 1.1. Memuat Dataset
 
----
+* Sumber utama: `ToyotaCorolla.csv`
+* Gunakan node KNIME:
 
-## 2. Struktur README ini (apa yang Anda akan lakukan)
+  * **CSV Reader** → Memuat dataset dan mendeteksi tipe kolom.
 
-1. Muat dataset dan inspeksi singkat.
-2. Konversi tipe yang relevan.
-3. Bersihkan data (hapus duplikasi).
-4. Simpan dataset terproses.
-5. Buat visualisasi: histogram, scatter plots, korelasi.
-6. (Opsional) Baseline modeling: regresi linear.
-7. Simpan semua hasil ke folder output.
+## 1.2. Pemeriksaan Struktur Dataset
 
----
+Hal-hal yang diperiksa:
 
-## 3. Step-by-step code (jalankan di Jupyter atau script `run_analysis.py`)
+* Jumlah baris & kolom
+* Tipe data setiap kolom (numeric vs kategorik)
+* Nilai hilang (missing values)
+* Nilai duplikat
 
-### A. Muat dataset dan inspeksi cepat
+Node yang digunakan:
 
-```python
-import pandas as pd
-from pathlib import Path
-DATA = Path('/mnt/data/ToyotaCorolla.csv')
-OUT = Path('/mnt/data/knime_report_outputs')
-OUT.mkdir(exist_ok=True)
+* **Data Explorer**
+* **Statistics**
+* **Duplicate Row Filter**
 
-df = pd.read_csv(DATA, encoding='latin1', low_memory=False)
-print('Rows, cols:', df.shape)
-print(df.head())
-print(df.info())
-```
+## 1.3. Perbaikan Tipe Data
 
-### B. Periksa missing values dan tipe data
+Beberapa kolom pada dataset Toyota Corolla sering terbaca sebagai string (object), misalnya kolom angka dengan koma.
 
-```python
-missing = df.isna().sum().sort_values(ascending=False)
-print(missing[missing>0])
-print(df.dtypes)
-```
+Langkah:
 
-### C. Konversi kolom bertipe object yang sebenarnya numeric
+* Mengubah kolom ke tipe angka (Integer/Double) menggunakan:
 
-```python
-for col in df.columns:
-    if df[col].dtype == object:
-        # hilangkan tanda ribuan dan coba parse
-        coerced = pd.to_numeric(df[col].astype(str).str.replace(',',''), errors='coerce')
-        if coerced.notna().sum() / len(df) > 0.8:
-            df[col] = coerced
-```
+  * **Column Auto-Type Cast**
+  * atau **String to Number** jika butuh konversi spesifik.
 
-### D. Hapus duplikasi dan simpan dataset terproses
+## 1.4. Penanganan Missing Values
 
-```python
-processed = df.drop_duplicates().reset_index(drop=True)
-processed.to_csv(OUT / 'ToyotaCorolla_processed.csv', index=False)
-```
+Jika ada nilai kosong:
 
-### E. Buat visualisasi (simpan ke PNG)
+* Untuk numerik: gunakan median
+* Untuk kategorik: gunakan mode atau kategori baru
 
-Berikut contoh plotting menggunakan matplotlib. Jalankan tiap blok untuk membuat file gambar.
+Node yang digunakan:
 
-1. Histogram Price
+* **Missing Value**
 
-```python
-import matplotlib.pyplot as plt
-if 'Price' in processed.columns:
-    plt.figure(figsize=(8,5))
-    plt.hist(processed['Price'].dropna(), bins=30)
-    plt.title('Histogram: Price')
-    plt.xlabel('Price')
-    plt.ylabel('Count')
-    plt.tight_layout()
-    plt.savefig(OUT / 'hist_price.png')
-    plt.close()
-```
+## 1.5. Pembersihan Data
 
-2. Scatter Price vs Age_08_04
+* Menghapus duplikasi
+* Menyusun ulang kolom bila diperlukan
 
-```python
-if {'Price','Age_08_04'}.issubset(processed.columns):
-    plt.figure(figsize=(8,5))
-    plt.scatter(processed['Age_08_04'], processed['Price'], s=10, alpha=0.6)
-    plt.title('Price vs Age_08_04')
-    plt.xlabel('Age_08_04 (months)')
-    plt.ylabel('Price')
-    plt.tight_layout()
-    plt.savefig(OUT / 'scatter_price_age.png')
-    plt.close()
-```
+Node:
 
-3. Scatter Price vs KM
+* **Duplicate Row Filter**
+* **Column Filter**
 
-```python
-if {'Price','KM'}.issubset(processed.columns):
-    plt.figure(figsize=(8,5))
-    plt.scatter(processed['KM'], processed['Price'], s=10, alpha=0.6)
-    plt.title('Price vs KM')
-    plt.xlabel('KM')
-    plt.ylabel('Price')
-    plt.tight_layout()
-    plt.savefig(OUT / 'scatter_price_km.png')
-    plt.close()
-```
-
-4. Correlation matrix (numeric)
-
-```python
-import numpy as np
-num = processed.select_dtypes(include=[np.number])
-if num.shape[1] > 1:
-    corr = num.corr()
-    plt.figure(figsize=(10,8))
-    plt.imshow(corr, aspect='auto', cmap='viridis')
-    plt.colorbar(fraction=0.03)
-    plt.xticks(range(len(corr.columns)), corr.columns, rotation=90)
-    plt.yticks(range(len(corr.index)), corr.index)
-    plt.title('Correlation matrix (numeric)')
-    plt.tight_layout()
-    plt.savefig(OUT / 'corr_matrix.png')
-    plt.close()
-```
-
-> Setelah menjalankan blok di atas, periksa folder `/mnt/data/knime_report_outputs/` untuk empat file PNG.
+Output akhir tahap ini adalah dataset bersih siap diproses.
 
 ---
 
-## 4. Baseline modeling (opsional)
+# 2. Tahap Data Processing & Klasifikasi
 
-Jika ingin baseline cepat:
+Fokus tahap ini adalah:
 
-```python
-from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LinearRegression
-from sklearn.metrics import r2_score, mean_squared_error
+* Transformasi tambahan
+* Pemilihan fitur
+* Proses klasifikasi (jika dibuat dalam workflow)
 
-if {'Price','Age_08_04','KM'}.issubset(processed.columns):
-    df_model = processed[['Price','Age_08_04','KM']].dropna()
-    X = df_model[['Age_08_04','KM']]
-    y = df_model['Price']
-    X_train, X_test, y_train, y_test = train_test_split(X,y,test_size=0.25,random_state=42)
-    model = LinearRegression(); model.fit(X_train,y_train)
-    y_pred = model.predict(X_test)
-    print('R2:', r2_score(y_test,y_pred))
-    print('MSE:', mean_squared_error(y_test,y_pred))
-    print('Coefficients:', dict(zip(X.columns, model.coef_)))
-```
+## 2.1. Normalisasi / Standarisasi Data (Opsional)
+
+Untuk model tertentu diperlukan normalisasi.
+Node yang digunakan:
+
+* **Normalizer**
+
+## 2.2. Feature Engineering (Opsional)
+
+Contoh yang biasa dilakukan:
+
+* Membuat bin kategori: KM, Age
+* Mengubah Fuel_Type menjadi One-Hot Encoding
+
+Node:
+
+* **One to Many (One-Hot Encoding)**
+* **Rule Engine** untuk membuat label atau kategori
+
+## 2.3. Pembuatan Target (Jika melakukan klasifikasi)
+
+Pada dataset Toyota Corolla, target umum:
+
+* **Klasifikasi harga (High/Low Price)**
+* **Prediksi kondisi berdasarkan KM atau Age**
+
+Node:
+
+* **Rule Engine** → membuat kategori target berdasarkan threshold
+
+## 2.4. Membuat Model Klasifikasi
+
+Model yang umum digunakan:
+
+* Decision Tree
+* Random Forest
+* Logistic Regression
+
+Node KNIME:
+
+* **Decision Tree Learner**
+* **Decision Tree Predictor**
+* **Random Forest Learner**
+* **Random Forest Predictor**
+* 
+---
+
+# 3. Tahap Visualisasi
+
+Berikut visualisasi *langsung dari dataset CSV* yang telah dihasilkan. Anda dapat membuka file PNG di folder:
+`/mnt/data/visuals_readme/`
+
+### 3.1. Histogram Harga (Price)
+
+**File:** `hist_price.png`
+
+* Menunjukkan distribusi harga mobil Toyota Corolla.
+* Membantu memahami apakah harga condong (skewed) ke kiri/kanan.
+
+### 3.2. Scatter Plot: Price vs Age_08_04
+
+**File:** `scatter_age.png`
+
+* Menunjukkan hubungan antara umur mobil (bulan) dan harga.
+* Biasanya menunjukkan pola menurun (semakin tua → harga turun).
+
+### 3.3. Scatter Plot: Price vs KM
+
+**File:** `scatter_km.png`
+
+* Menunjukkan hubungan antara jarak tempuh dan harga.
+* Harga cenderung turun saat KM meningkat.
+
+### 3.4. Korelasi Antar Fitur (Correlation Matrix)
+
+**File:** `corr_matrix.png`
+
+* Memvisualisasikan hubungan antar fitur numerik.
+* Membantu memilih fitur terbaik untuk modeling.
+
+Visualisasi dapat dibuat langsung dari KNIME atau dari hasil CSV.
+
+Berikut visualisasi utama yang perlu dihasilkan:
+
+## 3.1. Histogram Harga (Price)
+
+Tujuan:
+
+* Melihat distribusi harga mobil.
+
+Node KNIME:
+
+* **Histogram**
+* atau **JavaScript Histogram**
+
+## 3.2. Scatter Plot
+
+Plot yang relevan:
+
+* **Price vs Age_08_04** → melihat penyusutan harga
+* **Price vs KM** → melihat hubungan jarak tempuh dan nilai
+
+Node KNIME:
+
+* **Scatter Plot**
+* **Interactive Scatter Plot**
+
+## 3.3. Korelasi Antar Fitur
+
+Digunakan untuk melihat korelasi antar variabel numerik.
+
+Node KNIME:
+
+* **Linear Correlation**
+* **Correlation Matrix**
+* **Heatmap**
+
+Output biasanya berupa visualisasi seperti:
+
+* grafik histogram
+* scatter plot
+* matriks korelasi
 
 ---
 
-## 5. Hasil visualisasi yang saya siapkan (sudah dibuat)
+---
 
-Jika Anda tidak ingin menjalankan skrip sendiri, saya sudah menyimpan visualisasi berikut:
+# 4. Ringkasan Alur KNIME (Step-by-Step)
 
-* `/mnt/data/knime_report_outputs/hist_price.png`
-* `/mnt/data/knime_report_outputs/scatter_price_age.png`
-* `/mnt/data/knime_report_outputs/scatter_price_km.png`
-* `/mnt/data/knime_report_outputs/corr_matrix.png`
+Berikut langkah KNIME paling ringkas yang dapat langsung direplikasi:
 
-Anda bisa mengunduhnya langsung.
+1. **CSV Reader** → memuat `ToyotaCorolla.csv`
+2. **Data Explorer** → lihat kualitas data
+3. **Missing Value** → perbaikan missing value
+4. **String to Number / Auto-Type Cast** → memperbaiki tipe data
+5. **Duplicate Row Filter** → menghapus duplikasi
+6. **One to Many (One-Hot Encoding)** → encode kolom kategorikal
+7. **Rule Engine** → membuat target klasifikasi (opsional)
+8. **Normalizer** → normalisasi numerik (opsional)
+9. **Decision Tree / Random Forest Learner** → model klasifikasi
+10. **Predictor Node** → menghasilkan prediksi
+11. **Scorer** → mengevaluasi kualitas model
+12. **Histogram / Scatter Plot / Heatmap** → membuat visualisasi
 
 ---
 
-## 6. Tips interpretasi untuk tiap visualisasi
+# 5. Output
 
-* **Histogram Price**: cari skew (kanan/kiri). Jika skew tinggi, pertimbangkan transformasi log untuk modeling.
-* **Scatter Price vs Age**: tren negatif tipikal; cek outlier (umur rendah tapi harga rendah).
-* **Scatter Price vs KM**: korelasi negatif diharapkan; variasi besar menandakan fitur tambahan (model/tahun) penting.
-* **Correlation matrix**: gunakan untuk memilih fitur yang berkorelasi tinggi satu sama lain; hindari multikolinearitas.
+File yang dapat dihasilkan:
 
----
+* Dataset bersih (`ToyotaCorolla_processed.csv`)
+* Visualisasi:
 
-## 7. Langkah lanjutan (opsional, rekomendasi)
-
-1. Encoding kategori: `Model`, `Fuel_Type`, `Color`.
-2. Imputasi missing values (median untuk numerik, mode atau new category untuk kategorik).
-3. Feature selection & regularisasi (Ridge/Lasso).
-4. Coba model non-linear (RandomForest / XGBoost) dan gunakan CV untuk tuning.
-5. Interpretasi: SHAP untuk menjelaskan pengaruh fitur.
+  * Histogram harga
+  * Scatter Price vs Age
+  * Scatter Price vs KM
+  * Matriks korelasi
+* Model klasifikasi + Confusion Matrix
 
 ---
 
-## 8. Jika Anda mau saya lakukan sekarang
-
-Ketik salah satu opsi:
-
-* `buat notebook reproducible` — saya buat `analysis.ipynb` dan simpan.
-* `jalankan modeling XGBoost` — saya jalankan XGBoost CV dan kirim hasil.
-* `ekspor README ke md/pdf` — saya ekspor dan beri link unduhan.
-
----
-
-Terima kasih — README ini sudah disederhanakan dan difokuskan pada langkah demi langkah serta instruksi pembuatan visualisasi. Jika Anda butuh format lain (mis. ringkasan 1 halaman, atau instruksi KNIME), beri tahu saya.
