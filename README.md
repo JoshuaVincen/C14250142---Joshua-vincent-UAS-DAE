@@ -210,6 +210,8 @@ Output biasanya berupa visualisasi seperti:
 * matriks korelasi
 
 ---
+## 3.4 preview hasil data
+<img width="1364" height="605" alt="image" src="https://github.com/user-attachments/assets/65106f4a-a9c1-4b8e-884c-c25462c36a20" />
 
 ---
 
