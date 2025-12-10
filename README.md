@@ -9,6 +9,15 @@ READ ME ini berisi ringkasan **step-by-step** proses analisis menggunakan:
 
 ---
 
+Insight
+
+1. Produksi tidak stabil tiap tahun
+2. Penjualan tinggi terjadi pada rentang harga tertentu
+3. Fuel type tertentu mendominasi pasar
+4. Umur dan kilometer berbanding lurus
+
+---
+
 # 1. Tahap Data Preparation
 ## 1.1. Memuat Dataset
 
