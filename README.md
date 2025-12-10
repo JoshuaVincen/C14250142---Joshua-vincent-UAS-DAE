@@ -33,9 +33,10 @@ Node yang digunakan:
 <img width="495" height="244" alt="image" src="https://github.com/user-attachments/assets/907e6933-db5c-4f3e-a2fd-188f46a1fb6d" />
 
 Dalam proses ini file data csv yang digunakan di filter dan di visualisasikan 
-Bagian di atas menggunakan table view untuk menunjukan jumlah produksi per tahun 1998-2004
-Dan bagian di bawah menggunakan pie chart untuk menampilkan jumlah produksi per bulan tahun 1998-2004
 
+Bagian di atas menggunakan table view untuk menunjukan jumlah produksi per tahun 1998-2004
+
+Dan bagian di bawah menggunakan pie chart untuk menampilkan jumlah produksi per bulan tahun 1998-2004
 
 
 ---
