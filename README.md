@@ -1,5 +1,5 @@
-# C14250142---Joshua-vincent
-# C14250126---Jason Heinrich Zelim
+* C14250142---Joshua-vincent
+* C14250126---Jason Heinrich Zelim
 # README — Analisis Dataset Toyota Corolla (Tanpa Python)
 
 READ ME ini berisi ringkasan **step-by-step** proses analisis menggunakan:
