@@ -64,6 +64,14 @@ Scatter plot ini mengambil data csv dan menampilkan km kendaraan berdasarkan umu
 
 ---
 
+<img width="577" height="119" alt="image" src="https://github.com/user-attachments/assets/65ca4438-9032-48d0-a1c7-7f42b0e6e33d" />
+
+Proses ini mengambil data dari csv dan menggunakan desicion tree untuk menampilkan desicion tree mobil manual dan automatic
+
+<img width="411" height="420" alt="image" src="https://github.com/user-attachments/assets/1d5214ac-969e-45ce-94e5-b334cf9c2bb6" />
+
+---
+
 # 4. Ringkasan Alur KNIME (Step-by-Step)
 
 Berikut langkah KNIME paling ringkas yang dapat langsung direplikasi:
