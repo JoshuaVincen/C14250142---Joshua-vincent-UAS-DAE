@@ -56,6 +56,14 @@ Dan pie chart dibawah berfungsi untuk menunjukan jumlah mobil berdasarkan tipe f
 
 ---
 
+<img width="192" height="104" alt="image" src="https://github.com/user-attachments/assets/f208ab97-9696-4c10-9b73-64ca253ad436" />
+
+Scatter plot ini mengambil data csv dan menampilkan km kendaraan berdasarkan umur
+
+<img width="1259" height="454" alt="image" src="https://github.com/user-attachments/assets/af1cd2f8-cefb-4050-80c7-145d864cc4ec" />
+
+---
+
 # 4. Ringkasan Alur KNIME (Step-by-Step)
 
 Berikut langkah KNIME paling ringkas yang dapat langsung direplikasi:
