@@ -18,15 +18,15 @@ READ ME ini berisi ringkasan **step-by-step** proses analisis menggunakan:
 
 ---
 
-# 1. Tahap Data Preparation
-## 1.1. Memuat Dataset
+# Tahap Data Preparation
+## Memuat Dataset
 
 * Sumber utama: `ToyotaCorolla.csv`
 * Gunakan node KNIME:
 
   * **CSV Reader** → Memuat dataset dan mendeteksi tipe kolom.
 
-## 1.2. Penanganan Missing Values
+## Penanganan Missing Values
 
 Jika ada nilai kosong:
 
@@ -37,7 +37,7 @@ Node yang digunakan:
 * **Missing Value**
 ---
 
-# 2. Tahap Data Processing
+# Tahap Data Processing dan Visualisasi
 
 <img width="495" height="244" alt="image" src="https://github.com/user-attachments/assets/907e6933-db5c-4f3e-a2fd-188f46a1fb6d" />
 
