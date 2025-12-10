@@ -1,10 +1,11 @@
-# C14250142---Joshua-vincent-UAS-DAE
+# C14250142---Joshua-vincent
+# C14250126---Jason Heinrich Zelim
 # README — Analisis Dataset Toyota Corolla (Tanpa Python)
 
-Dokumen ini berisi ringkasan **step-by-step** proses analisis menggunakan:
+READ ME ini berisi ringkasan **step-by-step** proses analisis menggunakan:
 
 * **Dataset CSV Toyota Corolla**
-* **Workflow KNIME (`KNIME_TOYOTA_2.0.knwf`)**
+* **Workflow KNIME (`KNIME_TOYOTA_3.1.knwf`)**
 
 Ringkasan ini mencakup tiga tahap utama:
 
@@ -12,14 +13,9 @@ Ringkasan ini mencakup tiga tahap utama:
 2. **Tahap Data Processing & Klasifikasi**
 3. **Tahap Visualisasi**
 
-Tidak ada kode Python di dalam dokumen ini.
-
 ---
 
 # 1. Tahap Data Preparation
-
-Tahap ini dilakukan baik di KNIME maupun berdasarkan struktur dataset asli.
-
 ## 1.1. Memuat Dataset
 
 * Sumber utama: `ToyotaCorolla.csv`
@@ -27,110 +23,22 @@ Tahap ini dilakukan baik di KNIME maupun berdasarkan struktur dataset asli.
 
   * **CSV Reader** → Memuat dataset dan mendeteksi tipe kolom.
 
-## 1.2. Pemeriksaan Struktur Dataset
-
-Hal-hal yang diperiksa:
-
-* Jumlah baris & kolom
-* Tipe data setiap kolom (numeric vs kategorik)
-* Nilai hilang (missing values)
-* Nilai duplikat
-
-Node yang digunakan:
-
-* **Data Explorer**
-* **Statistics**
-* **Duplicate Row Filter**
-
-## 1.3. Perbaikan Tipe Data
-
-Beberapa kolom pada dataset Toyota Corolla sering terbaca sebagai string (object), misalnya kolom angka dengan koma.
-
-Langkah:
-
-* Mengubah kolom ke tipe angka (Integer/Double) menggunakan:
-
-  * **Column Auto-Type Cast**
-  * atau **String to Number** jika butuh konversi spesifik.
-
-## 1.4. Penanganan Missing Values
+## 1.2. Penanganan Missing Values
 
 Jika ada nilai kosong:
 
-* Untuk numerik: gunakan median
-* Untuk kategorik: gunakan mode atau kategori baru
+* Untuk value 0 diubah menjadi 0
 
 Node yang digunakan:
 
 * **Missing Value**
-
-## 1.5. Pembersihan Data
-
-* Menghapus duplikasi
-* Menyusun ulang kolom bila diperlukan
-
-Node:
-
-* **Duplicate Row Filter**
-* **Column Filter**
-
-Output akhir tahap ini adalah dataset bersih siap diproses.
-
 ---
 
-# 2. Tahap Data Processing & Klasifikasi
+# 2. Tahap Data Processing
 
-Fokus tahap ini adalah:
+<img width="369" height="94" alt="image" src="https://github.com/user-attachments/assets/d7128eaf-914b-4d77-b95d-79f5945cc420" />
+Dalam proses ini file data csv yang digunakan di gilter dan di visualisasi menggunakan table view untuk menunjukan jumlah produksi per tahun
 
-* Transformasi tambahan
-* Pemilihan fitur
-* Proses klasifikasi (jika dibuat dalam workflow)
-
-## 2.1. Normalisasi / Standarisasi Data (Opsional)
-
-Untuk model tertentu diperlukan normalisasi.
-Node yang digunakan:
-
-* **Normalizer**
-
-## 2.2. Feature Engineering (Opsional)
-
-Contoh yang biasa dilakukan:
-
-* Membuat bin kategori: KM, Age
-* Mengubah Fuel_Type menjadi One-Hot Encoding
-
-Node:
-
-* **One to Many (One-Hot Encoding)**
-* **Rule Engine** untuk membuat label atau kategori
-
-## 2.3. Pembuatan Target (Jika melakukan klasifikasi)
-
-Pada dataset Toyota Corolla, target umum:
-
-* **Klasifikasi harga (High/Low Price)**
-* **Prediksi kondisi berdasarkan KM atau Age**
-
-Node:
-
-* **Rule Engine** → membuat kategori target berdasarkan threshold
-
-## 2.4. Membuat Model Klasifikasi
-
-Model yang umum digunakan:
-
-* Decision Tree
-* Random Forest
-* Logistic Regression
-
-Node KNIME:
-
-* **Decision Tree Learner**
-* **Decision Tree Predictor**
-* **Random Forest Learner**
-* **Random Forest Predictor**
-* 
 ---
 
 # 3. Tahap Visualisasi
