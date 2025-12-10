@@ -40,7 +40,7 @@ Dan bagian di bawah menggunakan pie chart untuk menampilkan jumlah produksi per 
 
 <img width="909" height="494" alt="image" src="https://github.com/user-attachments/assets/087731f7-ec48-43e7-b120-7bb130e602b9" />
 
-<img width="1217" height="704" alt="image" src="https://github.com/user-attachments/assets/c7c30b46-f9de-4ec1-a638-81db815bc524" />
+<img width="888" height="437" alt="image" src="https://github.com/user-attachments/assets/8d4ecc93-de44-4c78-bcfe-177d151f9b05" />
 
 ---
 
@@ -49,6 +49,10 @@ Dan bagian di bawah menggunakan pie chart untuk menampilkan jumlah produksi per 
 Proses ini menghasilkan data berupa harga minimum dan maksimal mobil dengan penjualan lebih dari 15
 
 Dan pie chart dibawah berfungsi untuk menunjukan jumlah mobil berdasarkan tipe fuel
+
+<img width="1217" height="704" alt="image" src="https://github.com/user-attachments/assets/c7c30b46-f9de-4ec1-a638-81db815bc524" />
+
+<img width="862" height="420" alt="image" src="https://github.com/user-attachments/assets/6bb5c72f-074d-4bbe-9d3e-4b0dac066f18" />
 
 ---
 
