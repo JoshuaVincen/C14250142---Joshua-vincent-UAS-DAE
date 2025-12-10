@@ -9,7 +9,7 @@ READ ME ini berisi ringkasan **step-by-step** proses analisis menggunakan:
 
 ---
 
-Insight
+# Insight
 
 1. Produksi tidak stabil tiap tahun
 2. Penjualan tinggi terjadi pada rentang harga tertentu
