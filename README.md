@@ -38,11 +38,18 @@ Bagian di atas menggunakan table view untuk menunjukan jumlah produksi per tahun
 
 Dan bagian di bawah menggunakan pie chart untuk menampilkan jumlah produksi per bulan tahun 1998-2004
 
+<img width="909" height="494" alt="image" src="https://github.com/user-attachments/assets/087731f7-ec48-43e7-b120-7bb130e602b9" />
+
+<img width="1217" height="704" alt="image" src="https://github.com/user-attachments/assets/c7c30b46-f9de-4ec1-a638-81db815bc524" />
+
+---
+
 <img width="486" height="200" alt="image" src="https://github.com/user-attachments/assets/8e8d9913-d775-4521-9a96-d5d7dab7903f" />
 
 Proses ini menghasilkan data berupa harga minimum dan maksimal mobil dengan penjualan lebih dari 15
 
 Dan pie chart dibawah berfungsi untuk menunjukan jumlah mobil berdasarkan tipe fuel
+
 ---
 
 # 4. Ringkasan Alur KNIME (Step-by-Step)
