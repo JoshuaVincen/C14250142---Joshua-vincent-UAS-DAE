@@ -37,7 +37,8 @@ Node yang digunakan:
 # 2. Tahap Data Processing
 
 <img width="369" height="94" alt="image" src="https://github.com/user-attachments/assets/d7128eaf-914b-4d77-b95d-79f5945cc420" />
-Dalam proses ini file data csv yang digunakan di gilter dan di visualisasi menggunakan table view untuk menunjukan jumlah produksi per tahun
+
+Dalam proses ini file data csv yang digunakan di filter dan di visualisasi menggunakan table view untuk menunjukan jumlah produksi per tahun
 
 ---
 
