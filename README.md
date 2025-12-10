@@ -72,37 +72,9 @@ Proses ini mengambil data dari csv dan menggunakan desicion tree untuk menampilk
 
 ---
 
-# 4. Ringkasan Alur KNIME (Step-by-Step)
+# 5. Kesimpulan
 
-Berikut langkah KNIME paling ringkas yang dapat langsung direplikasi:
-
-1. **CSV Reader** → memuat `ToyotaCorolla.csv`
-2. **Data Explorer** → lihat kualitas data
-3. **Missing Value** → perbaikan missing value
-4. **String to Number / Auto-Type Cast** → memperbaiki tipe data
-5. **Duplicate Row Filter** → menghapus duplikasi
-6. **One to Many (One-Hot Encoding)** → encode kolom kategorikal
-7. **Rule Engine** → membuat target klasifikasi (opsional)
-8. **Normalizer** → normalisasi numerik (opsional)
-9. **Decision Tree / Random Forest Learner** → model klasifikasi
-10. **Predictor Node** → menghasilkan prediksi
-11. **Scorer** → mengevaluasi kualitas model
-12. **Histogram / Scatter Plot / Heatmap** → membuat visualisasi
-
----
-
-# 5. Output
-
-File yang dapat dihasilkan:
-
-* Dataset bersih (`ToyotaCorolla_processed.csv`)
-* Visualisasi:
-
-  * Histogram harga
-  * Scatter Price vs Age
-  * Scatter Price vs KM
-  * Matriks korelasi
-* Model klasifikasi + Confusion Matrix
+Analisis menunjukkan bahwa data dapat diproses dengan baik dan siap digunakan. Produksi mobil bervariasi tiap tahun dan bulan, sementara harga minimum dan maksimum terlihat jelas pada mobil dengan penjualan tinggi. Distribusi tipe fuel memperlihatkan satu jenis yang paling banyak digunakan. Hubungan antara umur mobil dan kilometer juga terlihat sesuai pola umum. Model decision tree mampu membedakan mobil manual dan automatic dengan jelas. Secara keseluruhan, seluruh proses memberikan gambaran lengkap mengenai kondisi dan karakteristik mobil dalam dataset.
 
 ---
 
